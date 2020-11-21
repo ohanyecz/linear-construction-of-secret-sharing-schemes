@@ -1,7 +1,14 @@
-__all__ = ["Node"]
+__all__ = ["Node", "Tree"]
 
 
 class Node:
+    """
+    A simple implementation of a node of a  general tree.
+
+    This implementation of the nodes uses a linked list implementation where every ``Node`` has a
+    `name`, a "pointer" to its immediate `child`, the first right `sibling` and its `parent` node.
+    If an edge is labelled to a node, an optional `label` can be added.
+    """
     def __init__(self, name, label=None, child=None, sibling=None):
         self.name = name
         self.label = label
@@ -16,6 +23,34 @@ class Node:
 
 
 class Tree:
+    """
+    An implementation of a general tree data structure.
+
+    An iterator is defined in the class which produces a preorder traversal of the tree.
+
+    Notes
+    -----
+    - you can access the root node, the height and the size (the number of nodes) of the tree.
+
+    Attributes
+    ----------
+    root : Node
+        The root node.
+
+    Examples
+    --------
+    >>> t = Tree(Node(0))
+    >>> t.height
+    0
+    >>> t.size
+    1
+    >>> p = t.add_node(t.root, Node(1))
+    >>> t.add_node(p, Node(2))
+    >>> p = t.add_node(t.root, Node(3))
+    >>> t.add_node(p, Node(4))
+    >>> [i.name for i in t]
+    [0, 1, 2, 3, 4]
+    """
     def __init__(self, root: "Node"):
         self.root = root
         self._height = 0
