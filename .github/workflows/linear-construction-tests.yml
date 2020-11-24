@@ -6,7 +6,15 @@
 
 name: linear-construction-tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'feature/**'
+      - 'hotfix/**'
+      - tree
+      - code_description
 
 jobs: 
   # Run unit tests on linux
