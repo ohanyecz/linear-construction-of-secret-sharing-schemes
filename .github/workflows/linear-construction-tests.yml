@@ -13,8 +13,6 @@ on:
       - develop
       - 'feature/**'
       - 'hotfix/**'
-      - tree
-      - code_description
 
 jobs: 
   # Run unit tests on linux
