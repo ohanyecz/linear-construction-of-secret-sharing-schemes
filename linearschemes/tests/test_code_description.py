@@ -21,3 +21,8 @@ def test_epsilon():
     assert epsilon(-2, 1) == []
     assert epsilon(1, -2) == []
     assert epsilon(3, 2) == [(1, 1), (2, 1), (3, 1), (1, 2), (2, 2), (3, 2)]
+
+
+def test_labels():
+    field = range(2)
+    assert list(labels(field, 2)) == [[0, 0], [0, 1], [1, 0], [1, 1]]
