@@ -1,6 +1,4 @@
-import pytest
-
-from ..finite_field import *
+from finite_field import *
 
 
 def test_construct_field():

@@ -1,7 +1,7 @@
 import pytest
 
-from ..finite_field import *
-from ..vector_space import *
+from finite_field import *
+from vector_space import *
 
 
 @pytest.fixture

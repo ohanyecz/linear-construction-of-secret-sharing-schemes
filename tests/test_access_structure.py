@@ -1,6 +1,6 @@
 import pytest
 
-from ..access_structure import AccessStructure
+from access_structure import AccessStructure
 
 
 def test_construct_bad_access_structure():

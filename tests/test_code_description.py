@@ -1,6 +1,4 @@
-import pytest
-
-from ..code_description import *
+from code_description import *
 
 
 def test_p_support():

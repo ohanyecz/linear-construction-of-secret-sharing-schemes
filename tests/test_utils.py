@@ -1,6 +1,4 @@
-import pytest
-
-from ..utils import powerset
+from utils import powerset
 
 
 def test_powerset():

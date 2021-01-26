@@ -1,6 +1,4 @@
-import pytest
-
-from ..node import *
+from node import *
 
 
 def test_construct_node():
