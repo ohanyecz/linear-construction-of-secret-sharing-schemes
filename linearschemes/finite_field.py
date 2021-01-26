@@ -35,6 +35,19 @@ class FiniteField:
     def inverse(self, a: int) -> int:
         return pow(a, self.q - 2, self.q)
 
+    def __eq__(self, other: 'FiniteField') -> bool:
+        if not isinstance(other, FiniteField):
+            return False
+        return self.q == other.q
+
+    def __ne__(self, other: 'FiniteField') -> bool:
+        if not isinstance(other, FiniteField):
+            return True
+        return not self == other
+
+    def __str__(self) -> str:
+        return f'A finite field of order {self.q}'
+
 
 class FiniteField2(FiniteField):
     """
