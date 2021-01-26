@@ -17,7 +17,7 @@ class FiniteField:
             self.q = p ** n
         else:
             self.q = p
-        self.elements = range(p)
+        self.elements = range(self.q)
 
     def add(self, a: int, b: int) -> int:
         return (a + b) % self.q
