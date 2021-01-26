@@ -1,7 +1,7 @@
 from random import choices
 from typing import List
 
-from .finite_field import FiniteField
+from finite_field import FiniteField
 
 __all__ = ['VectorSpace']
 

@@ -1,6 +1,6 @@
 from typing import Callable, Dict, Iterable, List, Optional, Set, ValuesView
 
-from .utils import powerset
+from utils import powerset
 
 __all__ = ['AccessStructure']
 
