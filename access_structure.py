@@ -16,15 +16,15 @@ class AccessStructure:
 
     Attributes
     ----------
-    n : `int`
+    n : int
         The number of the participants
-    gamma_min : `list`, optional
+    gamma_min : list, optional
         The minimal elements in Gamma
-    delta_max : `list`, optional
+    delta_max : list, optional
         The maximal elements in Delta
-    gamma: `list`, optional
+    gamma: list, optional
         The qualified sets Gamma
-    delta: `list`, optional
+    delta: list, optional
         The unqualified sets Delta
 
 
@@ -45,11 +45,10 @@ class AccessStructure:
 
     Examples
     --------
-    >>> import linearschemes as ls
-    >>> ac = ls.AccessStructure(4, gamma_min=[[1, 2], [3, 4], [2, 3]])
+    >>> ac = AccessStructure(4, gamma_min=[[1, 2], [3, 4], [2, 3]])
     >>> ac.is_trivial()
     False
-    >>> ac2 = ls.AccessStructure(4, gamma=[[1, 2], [2, 3], [3, 4], [1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4], [1, 2, 3, 4]], delta=[[1, 3], [1, 4], [2, 4], [1], [2], [3], [4], []]))
+    >>> ac2 = AccessStructure(4, gamma=[[1, 2], [2, 3], [3, 4], [1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4], [1, 2, 3, 4]], delta=[[1, 3], [1, 4], [2, 4], [1], [2], [3], [4], []]))
     >>> ac == ac2
     True
     """
@@ -91,8 +90,7 @@ class AccessStructure:
 
         Examples
         --------
-        >>> import linearschemes as ls
-        >>> ac = ls.AccessStructure.from_string(4, "12", "34", "23")
+        >>> ac = AccessStructure.from_string(4, "12", "34", "23")
         >>> ac.is_complete()
         True
         """
