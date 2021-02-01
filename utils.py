@@ -1,6 +1,8 @@
-from typing import Iterable, Set
+from typing import Iterable, List, Set
 
-__all__ = ['powerset']
+from mytypes import Vector
+
+__all__ = ['powerset', 'flatten']
 
 
 def powerset(iterable: Iterable) -> Set[frozenset]:
@@ -16,3 +18,30 @@ def powerset(iterable: Iterable) -> Set[frozenset]:
                 t.add(s[j])
         res.add(frozenset(t))
     return res
+
+
+def flatten(v: Vector) -> List[int]:
+    """
+    Return a copy of the vector `v` collapsed into one dimension.
+
+    Parameters
+    ----------
+    v: Vector
+        The input array to flatten.
+
+    Returns
+    -------
+    y: list
+        A copy of the input array, flattened.
+
+    Examples
+    --------
+    >>> v = [[1, 0], [1, 0, 0], [0, 0, 0], [0, 0]]
+    >>> flatten(v)
+    [1, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+
+    """
+    y = []
+    for i in v:
+        y.extend(i)
+    return y
