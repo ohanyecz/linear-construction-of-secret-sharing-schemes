@@ -43,5 +43,5 @@ def flatten(v: Vector) -> List[int]:
     """
     y = []
     for i in v:
-        y.extend(i)
+        y += i
     return y
