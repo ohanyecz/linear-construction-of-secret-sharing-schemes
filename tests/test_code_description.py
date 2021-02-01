@@ -1,6 +1,7 @@
 import pytest
 
 from code_description import *
+from finite_field import FiniteField, FiniteField2
 
 
 def test_p_support():
@@ -24,8 +25,11 @@ def test_epsilon():
 
 
 def test_labels():
-    field = range(2)
-    assert list(labels(field, 2)) == [[0, 0], [0, 1], [1, 0], [1, 1]]
+    field2 = FiniteField2()
+    assert list(labels(field2, 2)) == [[0, 0], [0, 1], [1, 0], [1, 1]]
+    field256 = FiniteField(2, 8)
+    assert [137, 137] in list(labels(field256, 2))
+    assert len(list(labels(field256, 2))) == 256 ** 2
 
 
 def test_g_property():
