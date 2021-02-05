@@ -1,23 +1,36 @@
-from typing import Iterable, List, Set
+from typing import Iterable, Iterator, List
 
 from mytypes import Vector
 
 __all__ = ['powerset', 'flatten']
 
 
-def powerset(iterable: Iterable) -> Set[frozenset]:
-    """Calculate the powerset of `iterable."""
+def powerset(iterable: Iterable) -> Iterator:
+    """
+    Generates the powerset of elements of `iterable`.
+
+    Examples
+    --------
+    >>> list(powerset(range(2)))
+    [set(), {0}, {1}, {0, 1}]
+    >>> for i in powerset(range(2)):
+    ...     print(i)
+    ...
+    set()
+    {0}
+    {1}
+    {0, 1}
+
+    """
     s = list(iterable)
     n = len(s)
-    res = set()
 
     for i in range(2 ** n):
         t = set()
         for j in range(n):
             if i & (1 << j):
                 t.add(s[j])
-        res.add(frozenset(t))
-    return res
+        yield t
 
 
 def flatten(v: Vector) -> List[int]:

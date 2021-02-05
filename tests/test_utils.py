@@ -4,10 +4,10 @@ from utils import powerset, flatten
 
 
 def test_powerset():
-    assert powerset(range(2, 1)) == {frozenset([])}
-    assert powerset(range(1, 3)) == {frozenset([]), frozenset([1]), frozenset([2]), frozenset([1, 2])}
-    assert powerset([1, 2, 3]) == {frozenset([]), frozenset([1]), frozenset([2]), frozenset([3]), frozenset([1, 2]),
-                                   frozenset([1, 3]), frozenset([2, 3]), frozenset([1, 2, 3])}
+    assert list(powerset(range(2, 1))) == [set()]
+    assert list(powerset(range(2))) == [set(), {0}, {1}, {0, 1}]
+    assert list(powerset([0, 1])) == [set(), {0}, {1}, {0, 1}]
+    assert list(powerset(range(1, 3))) == [set(), {1}, {2}, {1, 2}]
 
 
 def test_flatten():
