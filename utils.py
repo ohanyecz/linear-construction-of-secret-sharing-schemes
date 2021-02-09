@@ -1,11 +1,11 @@
-from typing import Iterable, Iterator, List
+from typing import Iterable, Iterator, List, Set
 
 from mytypes import Vector
 
 __all__ = ['powerset', 'flatten']
 
 
-def powerset(iterable: Iterable) -> Iterator:
+def powerset(iterable: Iterable) -> Iterator[Set[int]]:
     """
     Generates the powerset of elements of `iterable`.
 
