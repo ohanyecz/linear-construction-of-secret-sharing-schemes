@@ -40,12 +40,12 @@ class FiniteField:
             raise ValueError(f'Number {b} is not in the field.')
         return op(a, b) % self.q
 
-    def __eq__(self, other: 'FiniteField') -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, FiniteField):
             return False
         return self.q == other.q
 
-    def __ne__(self, other: 'FiniteField') -> bool:
+    def __ne__(self, other: object) -> bool:
         return not self == other
 
     def __str__(self) -> str:

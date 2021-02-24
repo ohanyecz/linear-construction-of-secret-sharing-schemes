@@ -195,7 +195,7 @@ class AccessStructure:
                     res.add(frozenset(psi))
         return res
 
-    def __eq__(self, other: 'AccessStructure') -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, AccessStructure):
             return False
         return (self.participants == other.participants and
@@ -206,7 +206,7 @@ class AccessStructure:
                 all(i in other.delta_max.values() for i in self.delta_max.values()) and
                 all(i in self.delta_max.values() for i in other.delta_max.values()))
 
-    def __ne__(self, other: 'AccessStructure') -> bool:
+    def __ne__(self, other: object) -> bool:
         return not self == other
 
     def __str__(self) -> str:
