@@ -48,6 +48,9 @@ class FiniteField:
     def __ne__(self, other: object) -> bool:
         return not self == other
 
+    def __hash__(self) -> int:
+        return hash((self.q, self.elements))
+
     def __str__(self) -> str:
         return f'A finite field of order {self.q}'
 
