@@ -1,6 +1,7 @@
+from operator import add, and_, sub, mul, xor
 from typing import Optional
 
-__all__ = ["FiniteField", "FiniteField2"]
+from utils import is_prime
 
 
 class FiniteField:
@@ -9,10 +10,14 @@ class FiniteField:
 
     Attributes
     ----------
-    p : int
+    p: int
         A prime number, the order of the field
+    n: int, optional
+        The power to raise `p` to.
     """
     def __init__(self, p: int, n: Optional[int] = None) -> None:
+        if not is_prime(p):
+            raise ValueError(f'The order of the finite field should be prime ({p} given)')
         if n:
             self.q = p ** n
         else:
@@ -20,20 +25,20 @@ class FiniteField:
         self.elements = range(self.q)
 
     def add(self, a: int, b: int) -> int:
-        return (a + b) % self.q
+        return self._perform(add, a, b)
 
     def subtract(self, a: int, b: int) -> int:
-        return (a - b) % self.q
+        return self._perform(sub, a, b)
 
     def multiply(self, a: int, b: int) -> int:
-        return (a * b) % self.q
+        return self._perform(mul, a, b)
 
-    def divide(self, a: int, b: int) -> int:
-        b_inv = self.inverse(b)
-        return self.multiply(a, b_inv)
-
-    def inverse(self, a: int) -> int:
-        return pow(a, self.q - 2, self.q)
+    def _perform(self, op, a, b):
+        if a not in self.elements:
+            raise ValueError(f'Number {a} is not in the field.')
+        if b not in self.elements:
+            raise ValueError(f'Number {b} is not in the field.')
+        return op(a, b) % self.q
 
     def __eq__(self, other: 'FiniteField') -> bool:
         if not isinstance(other, FiniteField):
@@ -41,8 +46,6 @@ class FiniteField:
         return self.q == other.q
 
     def __ne__(self, other: 'FiniteField') -> bool:
-        if not isinstance(other, FiniteField):
-            return True
         return not self == other
 
     def __str__(self) -> str:
@@ -57,12 +60,10 @@ class FiniteField2(FiniteField):
         super().__init__(2)
 
     def add(self, a: int, b: int) -> int:
-        return a ^ b
+        return self._perform(xor, a, b)
 
     def subtract(self, a: int, b: int) -> int:
         return self.add(a, b)
 
     def multiply(self, a: int, b: int) -> int:
-        return a & b
-
-
+        return self._perform(and_, a, b)
