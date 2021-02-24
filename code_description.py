@@ -2,7 +2,7 @@ from itertools import product
 from typing import Dict, Iterable, Iterator, List, Set, Tuple, Union
 
 from finite_field import FiniteField
-from mytypes import Vector
+from mytypes import Epsilon, Vector
 
 
 __all__ = ["p_support", "projection", "epsilon", "labels", "g_property"]
@@ -10,7 +10,7 @@ __all__ = ["p_support", "projection", "epsilon", "labels", "g_property"]
 
 def p_support(c: Vector) -> Set[int]:
     """Calculate p-support of a code vector."""
-    return {i + 1 for i, cw in enumerate(c) if any(cw)}
+    return {i for i, cw in enumerate(c, start=1) if any(cw)}
 
 
 def projection(c: Vector, x: Union[Iterable[int], range]) -> Vector:
@@ -18,7 +18,7 @@ def projection(c: Vector, x: Union[Iterable[int], range]) -> Vector:
     return [c[i-1] for i in sorted(x)]
 
 
-def epsilon(r: int, k: int) -> List[Tuple[int, int]]:
+def epsilon(r: int, k: int) -> Epsilon:
     return [(i, j) for j in range(1, k+1) for i in range(1, r+1)]
 
 
