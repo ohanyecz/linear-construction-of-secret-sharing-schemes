@@ -1,8 +1,7 @@
+from math import sqrt
 from typing import Iterable, Iterator, List, Set
 
 from mytypes import Vector
-
-__all__ = ['powerset', 'flatten']
 
 
 def powerset(iterable: Iterable) -> Iterator[Set[int]]:
@@ -58,3 +57,19 @@ def flatten(v: Vector) -> List[int]:
     for i in v:
         y += i
     return y
+
+
+def is_prime(n: int) -> bool:
+    """Check if `n` is prime."""
+    if n <= 1:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+
+    for i in range(3, int(sqrt(n))+1, 2):
+        if n % i == 0:
+            return False
+
+    return True
