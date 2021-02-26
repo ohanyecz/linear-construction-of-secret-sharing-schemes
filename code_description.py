@@ -1,11 +1,11 @@
 from itertools import product
-from typing import Dict, Iterable, Iterator, List, Set, Tuple, Union
+from typing import Callable, Dict, Iterable, Iterator, List, Set, Union
 
 from finite_field import FiniteField
 from mytypes import Epsilon, Vector
 
 
-__all__ = ["p_support", "projection", "epsilon", "labels", "g_property"]
+__all__ = ["p_support", "projection", "epsilon", "generate_vector_cond", "generate_vector", "g_property"]
 
 
 def p_support(c: Vector) -> Set[int]:
@@ -22,24 +22,76 @@ def epsilon(r: int, k: int) -> Epsilon:
     return [(i, j) for j in range(1, k+1) for i in range(1, r+1)]
 
 
-def labels(field: 'FiniteField', length: int) -> Iterator[list]:
+def generate_vector_cond(field: 'FiniteField', *, shares: List[int], cond: Callable[[Vector], bool]) -> Iterator[list]:
     """
-    Generate an edge label from elements of `field` of given `length`.
+    Generate a code vector where `cond` holds.
 
     Parameters
     ----------
     field: FiniteField
         The field from which the labels are generated.
-    length: int
-        The length of the generated label.
+    shares: list
+        The share size of the participants.
+    cond: callable
+        The condition which the vector must satisfy. In most cases, `cond` checks the p-support of a code vector.
+
 
     Returns
     -------
-    it : Iterator
+    res: Iterator
+
+
+    Examples
+    --------
+    Generate all possible edge label for which the p-support is in the set {2, 3} (only the first few result is shown):
+
+
+    >>> from code_description import generate_vector_cond
+    >>> from finite_field import FiniteField2
+    >>> field = FiniteField2()
+    >>> cond = lambda x: p_support(x) <= {2, 3}
+    >>> shares = [2, 3, 3, 2]
+    >>> for label in generate_vector_cond(field, shares=shares, cond=cond):
+    ...    print(label)
+    ...
+    [[0, 0], [0, 0, 0], [0, 0, 0], [0, 0]]
+    [[0, 0], [0, 0, 0], [0, 0, 1], [0, 0]]
+    [[0, 0], [0, 0, 0], [0, 1, 0], [0, 0]]
+    [[0, 0], [0, 0, 0], [0, 1, 1], [0, 0]]
+    [[0, 0], [0, 0, 0], [1, 0, 0], [0, 0]]
+    [[0, 0], [0, 0, 0], [1, 0, 1], [0, 0]]
+    [[0, 0], [0, 0, 0], [1, 1, 0], [0, 0]]
 
     """
-    for i in product(field.elements, repeat=length):
-        yield list(i)
+    for i in generate_vector(field, shares=shares):
+        if cond(i):
+            yield i
+
+
+def generate_vector(field: FiniteField, *, shares: List[int]) -> Iterator[list]:
+    """
+    Generate all possible code vectors in `field`.
+
+
+    Parameters
+    ----------
+    field: FiniteField
+        The field from which the labels are generated.
+    shares: list
+        The share size of the participants.
+
+
+    Returns
+    -------
+    res: Iterator
+
+    """
+    for i in product(field.elements, repeat=sum(shares)):
+        j, res = 0, []
+        for s in shares:
+            res.append(list(i)[j:(j+s)])
+            j += s
+        yield res
 
 
 def g_property(gamma_min: Dict[str, set], c_vectors: Dict[str, list]) -> bool:

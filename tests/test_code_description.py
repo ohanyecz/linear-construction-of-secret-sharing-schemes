@@ -24,12 +24,22 @@ def test_epsilon():
     assert epsilon(3, 2) == [(1, 1), (2, 1), (3, 1), (1, 2), (2, 2), (3, 2)]
 
 
-def test_labels():
-    field2 = FiniteField2()
-    assert list(labels(field2, 2)) == [[0, 0], [0, 1], [1, 0], [1, 1]]
-    field256 = FiniteField(2, 8)
-    assert [137, 137] in list(labels(field256, 2))
-    assert len(list(labels(field256, 2))) == 256 ** 2
+def test_generate_code_vectors():
+    f_2 = FiniteField2()
+    shares = [2, 3, 3, 2]
+    vectors = generate_vector(f_2, shares=shares)
+    assert [[0, 1], [1, 0, 0], [0, 1, 0], [0, 1]] in vectors
+    assert [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0]] not in vectors
+
+
+def test_generate_code_vectors_where_cond_holds():
+    f_2 = FiniteField2()
+    cond = lambda x: p_support(x) <= {2, 3}
+    shares = [2, 3, 3, 2]
+    labels = generate_vector_cond(f_2, shares=shares, cond=cond)
+    assert [[0, 0], [0, 0, 0], [0, 0, 0], [0, 0]] in labels
+    assert [[0, 0], [0, 0, 0], [1, 1, 0], [0, 0]] in labels
+    assert [[1, 0], [0, 0, 0], [1, 1, 0], [0, 0]] not in labels
 
 
 def test_g_property():
